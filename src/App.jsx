@@ -24,8 +24,8 @@ function App() {
     message: ''
   })
 
-  const startExperience = async () => {
-  if (audioRef.current) {
+const startExperience = async () => {
+  if (audioRef.current && !started) {
     try {
       await audioRef.current.play()
       setIsPlaying(true)
@@ -35,6 +35,12 @@ function App() {
     }
   }
 }
+
+useEffect(() => {
+  const events = ['touchstart', 'click', 'keydown']
+  events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
+  return () => events.forEach(e => window.removeEventListener(e, startExperience))
+}, [])
 
   useEffect(() => {
     // Data del compleanno di Bea: 13 giugno 2026
@@ -105,10 +111,7 @@ function App() {
   return (
 
     <>
-    {!started && (
-  <div className="start-screen" onClick={startExperience}>
-  </div>
-)}
+   
       <audio ref={audioRef} src={prettyAudio} loop/>
       
       <button className="music-toggle" onClick={toggleAudio} title={isPlaying ? 'Ferma musica' : 'Riproduci musica'}>
