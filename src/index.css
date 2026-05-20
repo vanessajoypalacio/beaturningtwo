@@ -1,0 +1,19 @@
+/* Global reset and layout */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  color: #222;
+}
+
+/* Prevent horizontal overflow */
+html, body { overflow-x: hidden; }
+
+/* Ensure root occupies full viewport width */
+#root {
+  width: 100vw;
+  max-width: 100%;
+}
