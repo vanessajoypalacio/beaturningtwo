@@ -55,14 +55,6 @@ function App() {
     return () => clearInterval(timer)
   }, [])
 
-  useEffect(() => {
-    // Auto-play music when component mounts
-    if (audioRef.current) {
-      audioRef.current.play()
-      setIsPlaying(true)
-    }
-  }, [])
-
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
