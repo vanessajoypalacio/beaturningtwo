@@ -42,6 +42,21 @@ useEffect(() => {
   return () => events.forEach(e => window.removeEventListener(e, startExperience))
 }, [])
 
+useEffect(() => {
+  const handleVisibility = () => {
+    if (document.hidden) {
+      audioRef.current?.pause()
+      setIsPlaying(false)
+    } else {
+      audioRef.current?.play()
+      setIsPlaying(true)
+    }
+  }
+
+  document.addEventListener('visibilitychange', handleVisibility)
+  return () => document.removeEventListener('visibilitychange', handleVisibility)
+}, [])
+
   useEffect(() => {
     // Data del compleanno di Bea: 13 giugno 2026
     const targetDate = new Date('2026-06-13T00:00:00').getTime()
