@@ -101,7 +101,7 @@ function App() {
     const img = new Image()
     img.src = url
 
-    alert('✅ Grazie per la conferma! Vi contatteremo presto.')
+    alert('Risposta inviata. Grazie per la conferma!')
     setFormData({
       name: '',
       attending: 'Si, parteciperò',
