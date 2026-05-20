@@ -15,6 +15,7 @@ function App() {
   const [secs, setSecs] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef(null)
+  const [started, setStarted] = useState(false)
   
   const [formData, setFormData] = useState({
     name: '',
@@ -22,6 +23,18 @@ function App() {
     guests: 1,
     message: ''
   })
+
+  const startExperience = async () => {
+  if (audioRef.current) {
+    try {
+      await audioRef.current.play()
+      setIsPlaying(true)
+      setStarted(true)
+    } catch (err) {
+      console.log("Autoplay bloccato:", err)
+    }
+  }
+}
 
   useEffect(() => {
     // Data del compleanno di Bea: 13 giugno 2026
@@ -98,7 +111,12 @@ function App() {
   }
 
   return (
+
     <>
+    {!started && (
+  <div className="start-screen" onClick={startExperience}>
+  </div>
+)}
       <audio ref={audioRef} src={prettyAudio} loop/>
       
       <button className="music-toggle" onClick={toggleAudio} title={isPlaying ? 'Ferma musica' : 'Riproduci musica'}>
