@@ -99,7 +99,7 @@ function App() {
 
   return (
     <>
-      <audio ref={audioRef} src={prettyAudio} loop muted />
+      <audio ref={audioRef} src={prettyAudio} loop/>
       
       <button className="music-toggle" onClick={toggleAudio} title={isPlaying ? 'Ferma musica' : 'Riproduci musica'}>
         {isPlaying ? (
@@ -182,15 +182,13 @@ function App() {
             </div>
 
             <div className="location-map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5743.70134277838!2d12.4654!3d42.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1"
-                width="100%"
-                height="250"
-                style={{ border: 0, borderRadius: '8px' }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+          <iframe
+  src="https://www.google.com/maps?q=Via+Pablo+Neruda+15,+02032+Fara+in+Sabina&output=embed"
+  width="100%"
+  height="250"
+  style={{ border: 0, borderRadius: "8px" }}
+  loading="lazy"
+/>
             </div>
 
             <div className="location-buttons">
