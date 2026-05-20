@@ -333,7 +333,7 @@ function App() {
         </div>
       </section>
 
-      <img src={animali} class="bottom-image" />
+      <img src={animali} className="bottom-image" />
     </>
   )
 }
