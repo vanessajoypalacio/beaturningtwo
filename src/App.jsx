@@ -82,8 +82,8 @@ useEffect(() => {
 }, [])
 
   useEffect(() => {
-    // Data del compleanno di Bea: 13 giugno 2026
-    const targetDate = new Date('2026-06-13T00:00:00').getTime()
+    // Data del compleanno di Bea: 13 giugno 2026 (10:00 CEST)
+    const targetDate = new Date('2026-06-13T10:00:00+02:00').getTime()
 
     const timer = setInterval(() => {
       const now = new Date().getTime()
