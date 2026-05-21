@@ -38,7 +38,7 @@ useEffect(() => {
     }
   }
 
-  const events = ['touchstart', 'click', 'keydown', 'mousemove', 'wheel']
+  const events = ['touchstart', 'click', 'keydown', 'mousemove', 'wheel', 'scroll', 'touchend']
   events.forEach(e => window.addEventListener(e, startAudio, { once: true }))
 
   return () => {
