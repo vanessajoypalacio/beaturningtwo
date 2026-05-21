@@ -1,5 +1,5 @@
 import './App.css'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import divisoreFiore from './assets/divisore_fiore.png'
 import beaTitle from './assets/image.png'
 import animali from './assets/animali.png'
@@ -17,7 +17,6 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef(null)
   const [started, setStarted] = useState(false)
-  const [showUnmuteBanner, setShowUnmuteBanner] = useState(false)
   
   const [formData, setFormData] = useState({
     name: '',
@@ -26,64 +25,57 @@ function App() {
     message: ''
   })
 
-const startExperience = async () => {
+const startExperience = useCallback(async () => {
   if (audioRef.current && !started) {
     try {
-      // If audio was muted for autoplay attempt, unmute on user gesture
-      audioRef.current.muted = false
       await audioRef.current.play()
       setIsPlaying(true)
       setStarted(true)
     } catch (err) {
-      console.log("Autoplay/unmute bloccato:", err)
+      console.log('Riproduzione bloccata:', err)
     }
   }
-}
+}, [started])
 useEffect(() => {
-  const interactionEvents = ['click', 'touchstart', 'keydown']
+  // Desktop: autoplay immediato con tentativi aggiuntivi al caricamento pagina
+  if (typeof window !== 'undefined' && window.innerWidth >= 769) {
+    const audioEl = audioRef.current
 
-  const unmuteOnInteraction = async () => {
-    if (audioRef.current && !started) {
+    const tryDesktopAutoplay = async () => {
+      if (!audioRef.current || started) return
       try {
-        audioRef.current.muted = false
         await audioRef.current.play()
         setIsPlaying(true)
         setStarted(true)
       } catch (err) {
-        console.log('Unmute attempt blocked:', err)
+        console.log('Autoplay desktop bloccato:', err)
       }
     }
-  }
 
-  // On desktop try muted autoplay, then listen for a real user gesture to unmute
-  if (typeof window !== 'undefined' && window.innerWidth >= 769) {
-    if (audioRef.current) {
-      // start muted autoplay (more likely to be allowed)
-      audioRef.current.muted = true
-      setShowUnmuteBanner(true)
-      audioRef.current.play()
-        .then(() => {
-          setIsPlaying(true)
-          // started remains false until user gesture unmute
-        })
-        .catch((err) => {
-          console.log('Muted autoplay attempt blocked on desktop:', err)
-        })
+    tryDesktopAutoplay()
+    window.addEventListener('load', tryDesktopAutoplay)
+    window.addEventListener('pageshow', tryDesktopAutoplay)
+    window.addEventListener('focus', tryDesktopAutoplay)
+    audioEl?.addEventListener('canplay', tryDesktopAutoplay)
+    audioEl?.addEventListener('loadeddata', tryDesktopAutoplay)
+
+    return () => {
+      window.removeEventListener('load', tryDesktopAutoplay)
+      window.removeEventListener('pageshow', tryDesktopAutoplay)
+      window.removeEventListener('focus', tryDesktopAutoplay)
+      audioEl?.removeEventListener('canplay', tryDesktopAutoplay)
+      audioEl?.removeEventListener('loadeddata', tryDesktopAutoplay)
     }
-
-    interactionEvents.forEach(e => window.addEventListener(e, unmuteOnInteraction, { once: true }))
   } else {
     // Mobile: keep existing behavior (play on first interaction)
     const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
     events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
-  }
 
     return () => {
-      interactionEvents.forEach(e => window.removeEventListener(e, unmuteOnInteraction))
-      const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
       events.forEach(e => window.removeEventListener(e, startExperience))
     }
-}, [])
+  }
+}, [started, startExperience])
 
 useEffect(() => {
   const handleVisibility = () => {
@@ -170,27 +162,7 @@ useEffect(() => {
 
     <>
    
-      <audio ref={audioRef} src={prettyAudio} loop preload="auto" playsInline autoPlay muted />
-
-      {showUnmuteBanner && (
-        <div className="unmute-banner" role="dialog" aria-live="polite">
-          <button className="unmute-button" onClick={async () => {
-            try {
-              if (audioRef.current) {
-                audioRef.current.muted = false
-                await audioRef.current.play()
-                setIsPlaying(true)
-                setStarted(true)
-                setShowUnmuteBanner(false)
-              }
-            } catch (err) {
-              console.log('Manual unmute failed:', err)
-            }
-          }}>
-            Clicca per ascoltare la musica
-          </button>
-        </div>
-      )}
+      <audio ref={audioRef} src={prettyAudio} loop preload="auto" playsInline autoPlay />
       
       <button className="music-toggle" onClick={toggleAudio} title={isPlaying ? 'Ferma musica' : 'Riproduci musica'}>
         {isPlaying ? (
