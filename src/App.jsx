@@ -38,8 +38,24 @@ const startExperience = async () => {
 }
 
 useEffect(() => {
-  const events = ['touchstart', 'click', 'keydown']
+  const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
   events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
+
+  // Try to autoplay on desktop (some browsers still block audible autoplay)
+  if (typeof window !== 'undefined' && window.innerWidth >= 769) {
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true)
+          setStarted(true)
+        })
+        .catch((err) => {
+          // Autoplay blocked — we'll rely on the interaction events added above
+          console.log('Autoplay attempt blocked on desktop:', err)
+        })
+    }
+  }
+
   return () => events.forEach(e => window.removeEventListener(e, startExperience))
 }, [])
 
@@ -128,7 +144,7 @@ useEffect(() => {
 
     <>
    
-      <audio ref={audioRef} src={prettyAudio} loop/>
+      <audio ref={audioRef} src={prettyAudio} loop preload="auto" playsInline />
       
       <button className="music-toggle" onClick={toggleAudio} title={isPlaying ? 'Ferma musica' : 'Riproduci musica'}>
         {isPlaying ? (
@@ -278,7 +294,7 @@ useEffect(() => {
             </div>
 
             <div className="form-group">
-              <label>Parteciperò? *</label>
+              <label>Parteciperai? *</label>
               <div className="radio-group">
                 <div className="radio-option">
                   <input
