@@ -16,7 +16,7 @@ function App() {
   const [secs, setSecs] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef(null)
-  const [started, setStarted] = useState(false)
+  const startedRef = useRef(false)
   
   const [formData, setFormData] = useState({
     name: '',
@@ -27,26 +27,27 @@ function App() {
 
 useEffect(() => {
   const startAudio = () => {
-    if (audioRef.current && !started) {
+    if (audioRef.current && !startedRef.current) {
+      startedRef.current = true
       const playPromise = audioRef.current.play()
       if (playPromise !== undefined) {
         playPromise
-          .then(() => {
-            setIsPlaying(true)
-            setStarted(true)
+          .then(() => setIsPlaying(true))
+          .catch(err => {
+            startedRef.current = false
+            console.log('Bloccato:', err)
           })
-          .catch(err => console.log('Bloccato:', err))
       }
     }
   }
 
-  const events = ['touchstart', 'touchend', 'click', 'keydown', 'scroll']
-  events.forEach(e => window.addEventListener(e, startAudio, { once: true, passive: true }))
+  const events = ['touchstart', 'touchend', 'click', 'scroll']
+  events.forEach(e => window.addEventListener(e, startAudio, { passive: true }))
 
   return () => {
     events.forEach(e => window.removeEventListener(e, startAudio))
   }
-}, [started])
+}, [])
 
 useEffect(() => {
   const handleVisibility = () => {
