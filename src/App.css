@@ -6,6 +6,26 @@
   box-sizing: border-box;
 }
 
+.reveal-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .start-screen {
   position: fixed;
   inset: 0;
@@ -521,8 +541,23 @@ html, body {
   gap: 10px;
   font-size: 0.95rem;
   color: #666;
-  margin-bottom: 30px;
+  margin-bottom: 6px;
   font-weight: 500;
+}
+
+.location-end-note {
+  max-width: 460px;
+  margin: 0 auto 8px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #E8748A;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+}
+
+.location-end-note strong {
+  color: #E8748A;
+  font-family: inherit;
 }
 
 .time-icon {
@@ -532,6 +567,7 @@ html, body {
 }
 
 .location-map {
+  margin-top: 0;
   margin-bottom: 30px;
   border-radius: 8px;
   overflow: hidden;
@@ -608,6 +644,11 @@ html, body {
 
   .location-place-name {
     font-size: 1.4rem;
+  }
+
+  .location-end-note {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
   }
 
   .location-header {

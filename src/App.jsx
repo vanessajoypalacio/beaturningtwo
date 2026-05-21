@@ -1,5 +1,5 @@
 import './App.css'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import divisoreFiore from './assets/divisore_fiore.png'
 import beaTitle from './assets/image.png'
 import animali from './assets/animali.png'
@@ -24,18 +24,6 @@ function App() {
     guests: 1,
     message: ''
   })
-
-const startExperience = useCallback(async () => {
-  if (audioRef.current && !started) {
-    try {
-      await audioRef.current.play()
-      setIsPlaying(true)
-      setStarted(true)
-    } catch (err) {
-      console.log('Riproduzione bloccata:', err)
-    }
-  }
-}, [started])
 
 useEffect(() => {
   const startAudio = async () => {
@@ -71,6 +59,26 @@ useEffect(() => {
 
   document.addEventListener('visibilitychange', handleVisibility)
   return () => document.removeEventListener('visibilitychange', handleVisibility)
+}, [])
+
+useEffect(() => {
+  const revealElements = document.querySelectorAll('.reveal-section')
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.15 }
+  )
+
+  revealElements.forEach((element) => observer.observe(element))
+
+  return () => observer.disconnect()
 }, [])
 
   useEffect(() => {
@@ -162,7 +170,7 @@ useEffect(() => {
         )}
       </button>
     
-      <section className="hero">
+      <section className="hero reveal-section">
         <div className="hero-content">
           <img src={beaTitle} alt="Bea is turning two" className="hero-title-image" />
           <div className="hero-date">13 Giugno 2026</div>
@@ -170,7 +178,7 @@ useEffect(() => {
         <img src={divisoreFiore} alt="floral divider" className="divider divider--compact" />
       </section>
 
-      <section className="countdown-section">
+      <section className="countdown-section reveal-section">
         <div className="countdown-container">
           <h2 className="countdown-subtitle">Conto alla rovescia</h2>
           <p className="location-subtitle">Per il grande giorno</p>
@@ -198,7 +206,7 @@ useEffect(() => {
         </div>
         <img src={divisoreFiore} alt="floral divider" className="divider divider--compact" />
       </section>
-      <section className="location-section">
+      <section className="location-section reveal-section">
         <div className="location-container">
           <div className="location-header">
             <h2 className="location-title">Il luogo</h2>
@@ -222,9 +230,13 @@ useEffect(() => {
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
-              <span>dalle 10:00 alle 14:00</span>
+              <span>dalle 10:00</span>
             </div>
 
+            <p className="location-end-note">
+              <strong>Nota:</strong> l'evento termina alle 14:00.
+            </p>
+<br />
             <div className="location-map">
           <iframe
   src="https://www.google.com/maps?q=Via+Pablo+Neruda+15,+02032+Fara+in+Sabina&output=embed"
@@ -260,7 +272,7 @@ useEffect(() => {
         <img src={divisoreFiore} alt="floral divider" className="divider" />
       </section>
 
-      <section className="dress-code-section">
+      <section className="dress-code-section reveal-section">
         <div className="dress-code-container">
           <h2 className="dress-code-title">Cosa portare</h2>
           <p className="dress-code-text">Il costume da bagno, sarà un pool party!<br/><br/><span className="dress-code-emojis">🏖️ 👙 ☀️</span></p>
@@ -271,7 +283,7 @@ useEffect(() => {
       </section>
 
     
-      <section className="rsvp-section">
+      <section className="rsvp-section reveal-section">
         <div className="rsvp-container">
           <div className="rsvp-header">
             <h2 className="rsvp-title">Conferma la <br className="rsvp-break"/>tua partecipazione</h2>
@@ -357,7 +369,7 @@ useEffect(() => {
         </div>
       </section>
 
-      <section className="footer-section">
+      <section className="footer-section reveal-section">
         <div className="footer-container">
           <h2 className="footer-title">Per maggiori informazioni contattateci:</h2>
           <a href="tel:+393291635893" className="footer-phone-item">
@@ -378,8 +390,8 @@ useEffect(() => {
         </div>
       </section>
 
-      <img src={animali} className="bottom-image bottom-image--desktop" />
-      <img src={animali2} className="bottom-image bottom-image--mobile" />
+      <img src={animali} className="bottom-image bottom-image--desktop reveal-section" alt="Decorazione finale desktop" />
+      <img src={animali2} className="bottom-image bottom-image--mobile reveal-section" alt="Decorazione finale mobile" />
     </>
   )
 }
