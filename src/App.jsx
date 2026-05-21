@@ -26,20 +26,22 @@ function App() {
   })
 
 useEffect(() => {
-  const startAudio = async () => {
+  const startAudio = () => {
     if (audioRef.current && !started) {
-      try {
-        await audioRef.current.play()
-        setIsPlaying(true)
-        setStarted(true)
-      } catch (err) {
-        console.log('Riproduzione bloccata:', err)
+      const playPromise = audioRef.current.play()
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true)
+            setStarted(true)
+          })
+          .catch(err => console.log('Bloccato:', err))
       }
     }
   }
 
-  const events = ['touchstart', 'click', 'keydown', 'mousemove', 'wheel', 'scroll', 'touchend']
-  events.forEach(e => window.addEventListener(e, startAudio, { once: true }))
+  const events = ['touchstart', 'touchend', 'click', 'keydown', 'scroll']
+  events.forEach(e => window.addEventListener(e, startAudio, { once: true, passive: true }))
 
   return () => {
     events.forEach(e => window.removeEventListener(e, startAudio))
