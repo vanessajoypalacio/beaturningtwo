@@ -36,46 +36,27 @@ const startExperience = useCallback(async () => {
     }
   }
 }, [started])
-useEffect(() => {
-  // Desktop: autoplay immediato con tentativi aggiuntivi al caricamento pagina
-  if (typeof window !== 'undefined' && window.innerWidth >= 769) {
-    const audioEl = audioRef.current
 
-    const tryDesktopAutoplay = async () => {
-      if (!audioRef.current || started) return
+useEffect(() => {
+  const startAudio = async () => {
+    if (audioRef.current && !started) {
       try {
         await audioRef.current.play()
         setIsPlaying(true)
         setStarted(true)
       } catch (err) {
-        console.log('Autoplay desktop bloccato:', err)
+        console.log('Riproduzione bloccata:', err)
       }
     }
-
-    tryDesktopAutoplay()
-    window.addEventListener('load', tryDesktopAutoplay)
-    window.addEventListener('pageshow', tryDesktopAutoplay)
-    window.addEventListener('focus', tryDesktopAutoplay)
-    audioEl?.addEventListener('canplay', tryDesktopAutoplay)
-    audioEl?.addEventListener('loadeddata', tryDesktopAutoplay)
-
-    return () => {
-      window.removeEventListener('load', tryDesktopAutoplay)
-      window.removeEventListener('pageshow', tryDesktopAutoplay)
-      window.removeEventListener('focus', tryDesktopAutoplay)
-      audioEl?.removeEventListener('canplay', tryDesktopAutoplay)
-      audioEl?.removeEventListener('loadeddata', tryDesktopAutoplay)
-    }
-  } else {
-    // Mobile: keep existing behavior (play on first interaction)
-    const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
-    events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
-
-    return () => {
-      events.forEach(e => window.removeEventListener(e, startExperience))
-    }
   }
-}, [started, startExperience])
+
+  const events = ['touchstart', 'click', 'keydown', 'mousemove', 'wheel']
+  events.forEach(e => window.addEventListener(e, startAudio, { once: true }))
+
+  return () => {
+    events.forEach(e => window.removeEventListener(e, startAudio))
+  }
+}, [started])
 
 useEffect(() => {
   const handleVisibility = () => {
