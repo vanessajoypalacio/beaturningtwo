@@ -511,6 +511,7 @@ html, body {
   transition: all 0.3s ease;
   border: 1.5px solid;
   white-space: nowrap;
+  font-family: 'Playfair Display', serif;
 }
 
 .btn-icon {
@@ -530,6 +531,20 @@ html, body {
   background: #E8748A;
   color: white;
   box-shadow: 0 4px 12px rgba(232, 116, 138, 0.3);
+}
+
+/* Desktop: "Apri in Maps" button filled with pink background */
+@media (min-width: 769px) {
+  .btn-maps {
+    background: #E8748A;
+    color: white;
+    border-color: #E8748A;
+  }
+
+  .btn-maps:hover {
+    background: #d6627b;
+    border-color: #d6627b;
+  }
 }
 
 @media (max-width: 768px) {
@@ -670,6 +685,7 @@ background: #ffffff;
   color: #333;
   margin-bottom: 8px;
   font-size: 0.95rem;
+  font-family: 'Playfair Display', serif;
 }
 
 .form-group input[type="text"],
@@ -741,6 +757,7 @@ background: #ffffff;
   justify-content: center;
   gap: 8px;
   transition: all 0.3s ease;
+  font-family: 'Playfair Display', serif;
 }
 
 .btn-submit:hover {
