@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import divisoreFiore from './assets/divisore_fiore.png'
 import beaTitle from './assets/image.png'
 import animali from './assets/animali.png'
+import animali2 from './assets/animali2.png'
 import prettyAudio from './assets/pretty.mp3'
 
 // Sostituisci con il tuo FORM_ID da Google Forms
@@ -359,7 +360,8 @@ useEffect(() => {
         </div>
       </section>
 
-      <img src={animali} className="bottom-image" />
+      <img src={animali} className="bottom-image bottom-image--desktop" />
+      <img src={animali2} className="bottom-image bottom-image--mobile" />
     </>
   )
 }

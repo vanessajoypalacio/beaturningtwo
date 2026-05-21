@@ -306,6 +306,24 @@ html, body {
   max-height: 410px;
 }
 
+.bottom-image--desktop {
+  display: block !important;
+}
+
+.bottom-image--mobile {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .bottom-image--desktop {
+    display: none !important;
+  }
+
+  .bottom-image--mobile {
+    display: block !important;
+  }
+}
+
 .countdown-number {
   width: clamp(56px, 10vw, 140px);
   height: clamp(56px, 10vw, 120px);
@@ -843,7 +861,7 @@ background: #ffffff;
   .location-time { font-size: 0.95rem; }
 
   .location-buttons { flex-direction: column; gap: 12px; }
-  .btn { width: 100%; padding: 12px; box-sizing: border-box; }
+  .btn { width: 100%; padding: 12px; box-sizing: border-box; font-size: 0.85rem; }
 
   .location-map iframe { height: 200px; }
 
@@ -852,14 +870,16 @@ background: #ffffff;
   .rsvp-title { font-size: 1.6rem; }
   .rsvp-form { padding: 16px; }
 
+  .form-group label { font-size: 0.85rem; }
+
   .form-group input[type="text"],
   .form-group input[type="number"],
   .form-group textarea {
-    font-size: 1rem;
+    font-size: 0.9rem;
     padding: 10px;
   }
 
-  .btn-submit { padding: 12px; font-size: 1rem; }
+  .btn-submit { padding: 12px; font-size: 0.9rem; }
 
   .btn-maps {
     background: #E8748A;
