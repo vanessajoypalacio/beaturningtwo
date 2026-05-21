@@ -178,12 +178,12 @@ useEffect(() => {
         <img src={divisoreFiore} alt="floral divider" className="divider divider--compact reveal-item" />
       </section>
 
-      <section className="countdown-section">
+      <section className="countdown-section ">
         <div className="countdown-container">
           <h2 className="countdown-subtitle reveal-item">Conto alla rovescia</h2>
           <p className="location-subtitle reveal-item">Per il grande giorno</p>
           <div className="countdown-grid">
-  <div className="countdown-box">
+  <div className="countdown-box ">
     <div className="countdown-number">{String(days).padStart(2, '0')}</div>
     <span className="countdown-label">Giorni</span>
   </div>
@@ -255,7 +255,7 @@ useEffect(() => {
                 </svg>
                 Apri in Maps
               </a>
-              <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Compleanno%20di%20Bea&dates=20260613T100000Z/20260613T140000Z&location=Via+Pablo+Neruda+15,+02032+Fara+in+Sabina" target="_blank" rel="noopener noreferrer" className="btn btn-calendar">
+              <a href="/compleanno-di-bea.ics" className="btn btn-calendar">
                 <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M8 2v4"></path>
                   <path d="M16 2v4"></path>
