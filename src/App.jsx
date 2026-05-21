@@ -28,35 +28,59 @@ function App() {
 const startExperience = async () => {
   if (audioRef.current && !started) {
     try {
+      // If audio was muted for autoplay attempt, unmute on user gesture
+      audioRef.current.muted = false
       await audioRef.current.play()
       setIsPlaying(true)
       setStarted(true)
     } catch (err) {
-      console.log("Autoplay bloccato:", err)
+      console.log("Autoplay/unmute bloccato:", err)
     }
   }
 }
-
 useEffect(() => {
-  const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
-  events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
+  const interactionEvents = ['click', 'touchstart', 'keydown']
 
-  // Try to autoplay on desktop (some browsers still block audible autoplay)
-  if (typeof window !== 'undefined' && window.innerWidth >= 769) {
-    if (audioRef.current) {
-      audioRef.current.play()
-        .then(() => {
-          setIsPlaying(true)
-          setStarted(true)
-        })
-        .catch((err) => {
-          // Autoplay blocked — we'll rely on the interaction events added above
-          console.log('Autoplay attempt blocked on desktop:', err)
-        })
+  const unmuteOnInteraction = async () => {
+    if (audioRef.current && !started) {
+      try {
+        audioRef.current.muted = false
+        await audioRef.current.play()
+        setIsPlaying(true)
+        setStarted(true)
+      } catch (err) {
+        console.log('Unmute attempt blocked:', err)
+      }
     }
   }
 
-  return () => events.forEach(e => window.removeEventListener(e, startExperience))
+  // On desktop try muted autoplay, then listen for a real user gesture to unmute
+  if (typeof window !== 'undefined' && window.innerWidth >= 769) {
+    if (audioRef.current) {
+      // start muted autoplay (more likely to be allowed)
+      audioRef.current.muted = true
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true)
+          // started remains false until user gesture unmute
+        })
+        .catch((err) => {
+          console.log('Muted autoplay attempt blocked on desktop:', err)
+        })
+    }
+
+    interactionEvents.forEach(e => window.addEventListener(e, unmuteOnInteraction, { once: true }))
+  } else {
+    // Mobile: keep existing behavior (play on first interaction)
+    const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
+    events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
+  }
+
+  return () => {
+    interactionEvents.forEach(e => window.removeEventListener(e, unmuteOnInteraction))
+    const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
+    events.forEach(e => window.removeEventListener(e, startExperience))
+  }
 }, [])
 
 useEffect(() => {
