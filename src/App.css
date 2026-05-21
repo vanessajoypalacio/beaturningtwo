@@ -899,6 +899,32 @@ background: #ffffff;
   .countdown-subtitle { font-size: 1.6rem; }
 }
 
+/* Signature Section */
+.signature-section {
+  background: #ffffff;
+  padding: 30px 20px 0 20px;
+  text-align: center;
+}
+
+.signature-text {
+  font-size: 0.85rem;
+  color: #999;
+  letter-spacing: 1px;
+  font-weight: 400;
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .signature-section {
+    padding: 20px 15px 0 15px;
+  }
+
+  .signature-text {
+    font-size: 0.7rem;
+  }
+}
+
 /* Footer Section */
 .footer-section {
   padding: 40px 20px;

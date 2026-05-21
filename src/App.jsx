@@ -357,6 +357,9 @@ useEffect(() => {
             </svg>
             <span>Pierluigi Valdez - +39 391 109 7112</span>
           </a>
+           <div className="signature-section">
+        <p className="signature-text">developed by Vanessa Joy</p>
+      </div>
         </div>
       </section>
 
