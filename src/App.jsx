@@ -17,6 +17,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef(null)
   const [started, setStarted] = useState(false)
+  const [showUnmuteBanner, setShowUnmuteBanner] = useState(false)
   
   const [formData, setFormData] = useState({
     name: '',
@@ -59,6 +60,7 @@ useEffect(() => {
     if (audioRef.current) {
       // start muted autoplay (more likely to be allowed)
       audioRef.current.muted = true
+      setShowUnmuteBanner(true)
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true)
@@ -76,11 +78,11 @@ useEffect(() => {
     events.forEach(e => window.addEventListener(e, startExperience, { once: true }))
   }
 
-  return () => {
-    interactionEvents.forEach(e => window.removeEventListener(e, unmuteOnInteraction))
-    const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
-    events.forEach(e => window.removeEventListener(e, startExperience))
-  }
+    return () => {
+      interactionEvents.forEach(e => window.removeEventListener(e, unmuteOnInteraction))
+      const events = ['touchstart', 'click', 'keydown', 'wheel', 'mousemove', 'scroll']
+      events.forEach(e => window.removeEventListener(e, startExperience))
+    }
 }, [])
 
 useEffect(() => {
@@ -168,7 +170,27 @@ useEffect(() => {
 
     <>
    
-      <audio ref={audioRef} src={prettyAudio} loop preload="auto" playsInline />
+      <audio ref={audioRef} src={prettyAudio} loop preload="auto" playsInline autoPlay muted />
+
+      {showUnmuteBanner && (
+        <div className="unmute-banner" role="dialog" aria-live="polite">
+          <button className="unmute-button" onClick={async () => {
+            try {
+              if (audioRef.current) {
+                audioRef.current.muted = false
+                await audioRef.current.play()
+                setIsPlaying(true)
+                setStarted(true)
+                setShowUnmuteBanner(false)
+              }
+            } catch (err) {
+              console.log('Manual unmute failed:', err)
+            }
+          }}>
+            Clicca per ascoltare la musica
+          </button>
+        </div>
+      )}
       
       <button className="music-toggle" onClick={toggleAudio} title={isPlaying ? 'Ferma musica' : 'Riproduci musica'}>
         {isPlaying ? (

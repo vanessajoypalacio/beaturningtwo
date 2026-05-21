@@ -53,6 +53,30 @@ html, body {
   transform: scale(1.1);
 }
 
+.unmute-banner {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+}
+
+.unmute-button {
+  border: none;
+  border-radius: 999px;
+  background: #E8748A;
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(232, 116, 138, 0.3);
+}
+
+.unmute-button:hover {
+  background: #d6627b;
+}
+
 @media (max-width: 480px) {
   .music-toggle {
     bottom: 12px;
@@ -64,6 +88,10 @@ html, body {
   .music-icon {
     width: 20px;
     height: 20px;
+  }
+
+  .unmute-banner {
+    display: none;
   }
 }
 
