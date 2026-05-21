@@ -62,7 +62,7 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  const revealElements = document.querySelectorAll('.reveal-section')
+  const revealElements = document.querySelectorAll('.reveal-item')
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -170,18 +170,18 @@ useEffect(() => {
         )}
       </button>
     
-      <section className="hero reveal-section">
-        <div className="hero-content">
+      <section className="hero">
+        <div className="hero-content reveal-item">
           <img src={beaTitle} alt="Bea is turning two" className="hero-title-image" />
           <div className="hero-date">13 Giugno 2026</div>
         </div>
-        <img src={divisoreFiore} alt="floral divider" className="divider divider--compact" />
+        <img src={divisoreFiore} alt="floral divider" className="divider divider--compact reveal-item" />
       </section>
 
-      <section className="countdown-section reveal-section">
+      <section className="countdown-section">
         <div className="countdown-container">
-          <h2 className="countdown-subtitle">Conto alla rovescia</h2>
-          <p className="location-subtitle">Per il grande giorno</p>
+          <h2 className="countdown-subtitle reveal-item">Conto alla rovescia</h2>
+          <p className="location-subtitle reveal-item">Per il grande giorno</p>
           <div className="countdown-grid">
   <div className="countdown-box">
     <div className="countdown-number">{String(days).padStart(2, '0')}</div>
@@ -204,16 +204,16 @@ useEffect(() => {
   </div>
           </div>
         </div>
-        <img src={divisoreFiore} alt="floral divider" className="divider divider--compact" />
+        <img src={divisoreFiore} alt="floral divider" className="divider divider--compact reveal-item" />
       </section>
-      <section className="location-section reveal-section">
+      <section className="location-section">
         <div className="location-container">
-          <div className="location-header">
+          <div className="location-header reveal-item">
             <h2 className="location-title">Il luogo</h2>
             <p className="location-subtitle">Dove celebreremo l'amore per Bea</p>
           </div>
 
-          <div className="location-card">
+          <div className="location-card reveal-item">
             <div className="location-icon-circle">
               <svg className="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -233,11 +233,11 @@ useEffect(() => {
               <span>dalle 10:00</span>
             </div>
 
-            <p className="location-end-note">
+            <p className="location-end-note reveal-item">
               <strong>Nota:</strong> l'evento termina alle 14:00.
             </p>
 <br />
-            <div className="location-map">
+            <div className="location-map reveal-item">
           <iframe
   src="https://www.google.com/maps?q=Via+Pablo+Neruda+15,+02032+Fara+in+Sabina&output=embed"
   width="100%"
@@ -247,7 +247,7 @@ useEffect(() => {
 />
             </div>
 
-            <div className="location-buttons">
+            <div className="location-buttons reveal-item">
               <a href="https://www.google.com/maps/place/Via+Pablo+Neruda+15,+02032+Fara+in+Sabina" target="_blank" rel="noopener noreferrer" className="btn btn-maps">
                 <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
@@ -269,28 +269,28 @@ useEffect(() => {
         </div>
         <br />
         <br />
-        <img src={divisoreFiore} alt="floral divider" className="divider" />
+        <img src={divisoreFiore} alt="floral divider" className="divider reveal-item" />
       </section>
 
-      <section className="dress-code-section reveal-section">
+      <section className="dress-code-section">
         <div className="dress-code-container">
-          <h2 className="dress-code-title">Cosa portare</h2>
-          <p className="dress-code-text">Il costume da bagno, sarà un pool party!<br/><br/><span className="dress-code-emojis">🏖️ 👙 ☀️</span></p>
+          <h2 className="dress-code-title reveal-item">Cosa portare</h2>
+          <p className="dress-code-text reveal-item">Il costume da bagno, sarà un pool party!<br/><br/><span className="dress-code-emojis">🏖️ 👙 ☀️</span></p>
         </div>
         <br />
         <br />
-         <img src={divisoreFiore} alt="floral divider" className="divider" />
+         <img src={divisoreFiore} alt="floral divider" className="divider reveal-item" />
       </section>
 
     
-      <section className="rsvp-section reveal-section">
+      <section className="rsvp-section">
         <div className="rsvp-container">
-          <div className="rsvp-header">
+          <div className="rsvp-header reveal-item">
             <h2 className="rsvp-title">Conferma la <br className="rsvp-break"/>tua partecipazione</h2>
             <p className="rsvp-subtitle">Non vediamo l'ora di vederti</p>
           </div>
 
-          <form className="rsvp-form" onSubmit={handleSubmit}>
+          <form className="rsvp-form reveal-item" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Nome completo *</label>
               <input
@@ -369,29 +369,29 @@ useEffect(() => {
         </div>
       </section>
 
-      <section className="footer-section reveal-section">
+      <section className="footer-section">
         <div className="footer-container">
-          <h2 className="footer-title">Per maggiori informazioni contattateci:</h2>
-          <a href="tel:+393291635893" className="footer-phone-item">
+          <h2 className="footer-title reveal-item">Per maggiori informazioni contattateci:</h2>
+          <a href="tel:+393291635893" className="footer-phone-item reveal-item">
             <svg className="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
             <span>Liana Krizia Palacio - +39 329 163 5893</span>
           </a>
-          <a href="tel:+393911097112" className="footer-phone-item">
+          <a href="tel:+393911097112" className="footer-phone-item reveal-item">
             <svg className="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
             <span>Pierluigi Valdez - +39 391 109 7112</span>
           </a>
            <div className="signature-section">
-        <p className="signature-text">developed by Vanessa Joy</p>
+        <p className="signature-text reveal-item">developed by Vanessa Joy</p>
       </div>
         </div>
       </section>
 
-      <img src={animali} className="bottom-image bottom-image--desktop reveal-section" alt="Decorazione finale desktop" />
-      <img src={animali2} className="bottom-image bottom-image--mobile reveal-section" alt="Decorazione finale mobile" />
+      <img src={animali} className="bottom-image bottom-image--desktop" alt="Decorazione finale desktop" />
+      <img src={animali2} className="bottom-image bottom-image--mobile" alt="Decorazione finale mobile" />
     </>
   )
 }

@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+.reveal-item,
 .reveal-section {
   opacity: 0;
   transform: translateY(24px);
@@ -13,12 +14,14 @@
   will-change: opacity, transform;
 }
 
+.reveal-item.is-visible,
 .reveal-section.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal-item,
   .reveal-section {
     opacity: 1;
     transform: none;
